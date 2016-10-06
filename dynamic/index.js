@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var ejs = require('ejs');
 var MongoClient = require('mongodb').MongoClient,
     format = require('util').format;
 
@@ -51,15 +52,22 @@ app.get('/', function (req, res, next) {
 });
 */
 app.get('/', (req, res) => {
-  db.collection('quotes').find().toArray((err, result) => {
+  db.collection('dynamic').find().toArray((err, result) => {
     if (err) return console.log(err)
     // renders index.ejs
-    res.render('index.ejs', {quotes: result})
+    res.render('index.ejs', {dynamic: result})
   })
 })
 
+app.get('/edit', (req, res) => {
+  db.collection('dynamic').find().toArray((err, result) => {
+    if (err) return console.log(err)
+    // renders index.ejs
+    res.render('edit.ejs', {dynamic: result})
+  })
+})
 
-app.post('/quotes', (req, res) => {
+app.post('/dynamic', (req, res) => {
     console.log("fuk");
     db.collection('dynamic').save(req.body, function (err, result) {
         if (err) {
