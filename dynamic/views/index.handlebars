@@ -2,16 +2,23 @@
   May Node and Express be with you.
 
 <ul class="dynamic">
-  {{# each dynamic}}
     <li class="quote">
+        {{#each dynamic}}
       <span>{{this.name}}</span>
+              <span>{{this.quote}}</span>
+                          <span>{{this._id}}</span>
+
           <!-- <button id="update">Edit</button> -->
-        <form action="/edit/:id" method="POST" />
+        <form action="/edit" />
     <input type="submit" value="edit" name="edit" />
-    <input type="hidden" name="_id" value=dynamic._id.toHexString()>
+    <input type="hidden" name="_id" value="{{this._id}}">
 
      <button id="delete">Delete</button>
         </form>
+        <a href="/edit/{{this._id}}">edit</a>
+        <a href="/edit/{{this._id}}">edit</a>
+
+
     </li>
   {{/each}}
 </ul>

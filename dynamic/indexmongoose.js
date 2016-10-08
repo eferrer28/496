@@ -2,22 +2,27 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var objectId = require('mongodb').ObjectID;
+
+var mongoose = require('mongoose');
+/*
 var MongoClient = require('mongodb').MongoClient,
     format = require('util').format;
+*/
+
 var handlebars = require('express-handlebars').create({
     defaultLayout: 'main'
 });
 var app = express();
 app.set('view engine', 'ejs')
 
-
+//mongoose.connect('mongodb://localhost/dynamic');
 
 
 //database connect
 app.set('port', 80);
 
 var db;
-MongoClient.connect('mongodb://127.0.0.1:27017/dynamic', function (err, database) {
+mongoose.connect('mongodb://localhost/dynamic', function (err, database) {
     if (err) {
         throw err;
     }
@@ -47,6 +52,35 @@ app.set('view engine', 'handlebars');
 
 
 
+var mySchema = new mongoose.Schema({
+	_id    : String,	
+	quote   : String
+});
+ 
+var user = mongoose.model('emp', mySchema);
+
+app.get('/', function(req, res){
+	dynamic.find({}, function(err, docs){
+		if(err) 
+            res.json(err);
+		else    
+            res.render('index', {users: docs});
+	});
+});
+
+app.post('/new', function(req, res){
+         new user({
+            _id : req.body.name,
+            quote: req.body.quote
+         }).save(function(err,doc){
+            if(err)
+                res.json(err);
+            else    
+                res.send('inserted');
+});
+         });
+
+/*
 app.get('/', (req, res) => {
   db.collection('dynamic').find().toArray((err, result) => {
     if (err) return console.log(err)
@@ -54,7 +88,7 @@ app.get('/', (req, res) => {
     res.render('index', {dynamic: result})
   })
 })
-/*
+
 app.get('/edit/:id', (req, res) => {
   var id = req.body.id;  
     
@@ -71,6 +105,8 @@ app.get('/edit/:id', (req, res) => {
   })
 })
 */
+
+/*
 app.post('/edit/:id', (req, res) => {
     db.collection('dynamic').findOne({id: req.params.id}, function(err, result) {
     if (err) return console.log(err)
@@ -109,3 +145,4 @@ app.post('/dynamic', (req, res) => {
 
     })
 })
+*/

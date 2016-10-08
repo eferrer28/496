@@ -1,28 +1,23 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
-var objectId = require('mongodb').ObjectID;
-
-var mongoose = require('mongoose');
-/*
+var ObjectId = require('mongodb').ObjectID;
 var MongoClient = require('mongodb').MongoClient,
     format = require('util').format;
-*/
-
 var handlebars = require('express-handlebars').create({
     defaultLayout: 'main'
 });
 var app = express();
 app.set('view engine', 'ejs')
 
-//mongoose.connect('mongodb://localhost/dynamic');
+
 
 
 //database connect
 app.set('port', 80);
 
 var db;
-mongoose.connect('mongodb://localhost/dynamic', function (err, database) {
+MongoClient.connect('mongodb://127.0.0.1:27017/dynamic', function (err, database) {
     if (err) {
         throw err;
     }
@@ -51,33 +46,7 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 
-
-var mySchema = new mongoose.Schema({
-	_id    : String,	
-	quote   : String
-});
- 
-var user = mongoose.model('emp', mySchema);
-
-app.get('/',function(req,res){
-  var context = {};
-  
-  res.render('index',context);
-});
-
-app.post('/new', function(req, res){
-         new user({
-            _id : req.body.name,
-            quote: req.body.quote
-         }).save(function(err,doc){
-            if(err)
-                res.json(err);
-            else    
-                res.send('inserted');
-});
-         });
-
-/*
+//displays everything in dymanic collection
 app.get('/', (req, res) => {
   db.collection('dynamic').find().toArray((err, result) => {
     if (err) return console.log(err)
@@ -86,33 +55,52 @@ app.get('/', (req, res) => {
   })
 })
 
-app.get('/edit/:id', (req, res) => {
-  var id = req.body.id;  
-    
-    var item = {
-    name: req.body.name,
-    quote: req.body.quote
-    
-};
+app.post('/new', (req, res) => {
+    console.log("fuk");
+    db.collection('dynamic').save(req.body, function (err, result) {
+        if (err) {
+            console.log("FUCKING ERROR IS THIS");
+            return console.log(err)
+        } else {
+            console.log('saved to dyn database')
+            res.redirect('/')
+        }
 
-  db.collection('dynamic').findOne({req.param('_id'), function(err, result) {
-    if (err) return console.log(err)
-    // renders index.ejs
-    res.render('edit', {dynamic: result})
-  })
+    })
 })
-*/
 
-/*
-app.post('/edit/:id', (req, res) => {
-    db.collection('dynamic').findOne({id: req.params.id}, function(err, result) {
+
+
+app.get('/edit/:id', (req, res) => {
+    var choice = req.params.id;
+    db.collection('dynamic').findOne({_id: new ObjectId(req.params.id)}, function(err, result) {
     if (err) return console.log(err)
     // renders index.ejs
     res.render('edit', {dynamic: result})
   });
 });
+
+
+app.post('/update/:id', (req, res) => {
     
+    var items = {
+        name: req.body.name,
+        quote: req.body.quote
+    }
     
+    var choice = req.params.id;
+    db.collection('dynamic').updateOne({_id: new ObjectId(req.params.id)}, {$set: items}, function(err, result) {
+    if (err) return console.log(err)
+    // renders index.ejs
+    res.redirect('/')
+  });
+});
+
+
+
+ /*   
+ 
+ 
 app.post('/update', (req, res) => {
   var id = req.body.id;  
     
@@ -128,18 +116,6 @@ app.post('/update', (req, res) => {
     res.redirect('/')
   })
 })
-
-app.post('/dynamic', (req, res) => {
-    console.log("fuk");
-    db.collection('dynamic').save(req.body, function (err, result) {
-        if (err) {
-            console.log("FUCKING ERROR IS THIS");
-            return console.log(err)
-        } else {
-            console.log('saved to dyn database')
-            res.redirect('/')
-        }
-
-    })
-})
 */
+//inserts new one into collection
+
