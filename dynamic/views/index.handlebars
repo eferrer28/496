@@ -1,22 +1,22 @@
 
-  May Node and Express be with you.
+Food Budget Tracker
 
 <ul class="dynamic">
-    <li class="quote">
+    <li class="price">
         {{#each dynamic}}
       <span>{{this.name}}</span>
-              <span>{{this.quote}}</span>
+              <span>{{this.price}}</span>
                           <span>{{this._id}}</span>
 
           <!-- <button id="update">Edit</button> -->
-        <form action="/edit" />
+        <form action="/delete/{{this._id}}" method="POST"/>
     <input type="submit" value="edit" name="edit" />
     <input type="hidden" name="_id" value="{{this._id}}">
 
      <button id="delete">Delete</button>
         </form>
         <a href="/edit/{{this._id}}">edit</a>
-        <a href="/edit/{{this._id}}">edit</a>
+        <a href="/delete/{{this._id}}">delete</a>
 
 
     </li>
@@ -25,7 +25,7 @@
 
 <form action="/new" method="POST">
         <input type="text" placeholder="name" name="name">
-        <input type="text" placeholder="quote" name="quote">
+        <input type="text" placeholder="price" name="price">
         Paleo Friendly?
           <input type="radio" name="paleo" value="yes" checked> Yes
         <input type="radio" name="paleo" value="no" checked> No

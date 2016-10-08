@@ -96,26 +96,15 @@ app.post('/update/:id', (req, res) => {
   });
 });
 
-
-
- /*   
- 
- 
-app.post('/update', (req, res) => {
-  var id = req.body.id;  
+app.get('/delete/:id', (req, res) => {
     
-    var item = {
-    name: req.body.name,
-    quote: req.body.quote
-    
-};
 
-  db.collection('dynamic').updateOne({"_id": objectId(id)}, {$set: item}, function(err, result) {
+    
+    var choice = req.params.id;
+    db.collection('dynamic').deleteOne({_id: new ObjectId(req.params.id)}, function(err, result) {
     if (err) return console.log(err)
     // renders index.ejs
     res.redirect('/')
-  })
-})
-*/
-//inserts new one into collection
+  });
+});
 

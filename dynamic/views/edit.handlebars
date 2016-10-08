@@ -3,14 +3,15 @@
  Edit Stuff
     {{#if dynamic}}
     {{dynamic._id}}
-     
+     {{dynamic.price}}
 
 <form action="/update/{{dynamic._id}}" method="POST">
         
 
         <input id="name" type="text" placeholder=" {{dynamic.name}}" name="name">
-        <input id="quote "type="text" placeholder="{{dynamic.quote}}" name="quote">
+        <input id="price "type="text" placeholder="{{dynamic.price}}" name="price">
         Paleo Friendly?
+            <input id="input" type="radio" name="paleo" value="yes" checked> No
         <input id="input" type="radio" name="paleo" value="no" checked> No
 
         
