@@ -6,23 +6,13 @@
 </head>
 <body>
  Edit Stuff
+    {{item.name}}
+        {{dynamic.quote}}
 
-<ul class="dynamic">
-  <% for(var i=0; i<dynamic.length; i++) {%>
-    <li class="quote">
-      <span><%= dynamic[i].name %></span>
-      <span><%= dynamic[i].quote %></span>
-      <button id="update">Edit</button>
-     <button id="delete">Delete</button>
-
-    </li>
-  <% } %>
-</ul>
-
-<form action="/edit" method="POST">
+<form action="/update/:id" method="POST">
         <input type="hidden" name="id" value="<%= dynamic.id %>">
 
-        <input id="name" type="text" placeholder="name" name="name">
+        <input id="name" type="text" placeholder="<%= dynamic.name %>" name="name">
         <input id="quote "type="text" placeholder="quote" name="quote">
         Paleo Friendly?
         <input id="input" type="radio" name="paleo" value="no" checked> No
