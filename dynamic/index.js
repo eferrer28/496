@@ -55,6 +55,20 @@ app.get('/', (req, res) => {
   })
 })
 
+app.get('/insert', (req, res) => {
+    res.render('insert')
+  })
+
+app.get('/editdelete', (req, res) => {
+  db.collection('dynamic').find().toArray((err, result) => {
+    if (err) return console.log(err)
+    // renders index.ejs
+    res.render('editdelete', {dynamic: result})
+  })
+})
+
+
+
 app.post('/new', (req, res) => {
     console.log("fuk");
     db.collection('dynamic').save(req.body, function (err, result) {
@@ -85,7 +99,11 @@ app.post('/update/:id', (req, res) => {
     
     var items = {
         name: req.body.name,
-        quote: req.body.quote
+        price: req.body.price,
+        paleo: req.body.paleo,
+        cheap: req.body.cheap
+        
+
     }
     
     var choice = req.params.id;

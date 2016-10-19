@@ -8,14 +8,17 @@
     </tr>
     {{#each dynamic}}
     <tr>
-    <td alight="center">{{this.name}}</td>
+    <td>{{this.name}}</td>
     
-    <td alight="center">{{this.price}}</td> 
-    <td alight="center">{{this.paleo}}</td> 
-    <td alight="center">{{this.cheap}}</td> 
+    <td>{{this.price}}</td> 
+    <td>{{this.paleo}}</td> 
+    <td>{{this.cheap}}</td> 
 
 
 
+
+    <td><a href="/edit/{{this._id}} " >edit</a></td> 
+     <td><a href="/delete/{{this._id}} " onclick="return confirm('Do you REALLY want to delete this?');">delete</a> </td> 
 </tr>
 {{/each}}
 </table>

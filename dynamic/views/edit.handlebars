@@ -2,20 +2,21 @@
 
  Edit Stuff
     {{#if dynamic}}
-    {{dynamic._id}}
-     {{dynamic.price}}
+
 
 <form action="/update/{{dynamic._id}}" method="POST">
         
 
-        <input id="name" type="text" placeholder=" {{dynamic.name}}" name="name">
-        <input id="price "type="text" placeholder="{{dynamic.price}}" name="price">
+        <input id="name" type="text" value=" {{dynamic.name}}" name="name">
+        <input id="price" step="any" type="number" value="{{dynamic.price}}" name="price">
         Paleo Friendly?
-            <input id="input" type="radio" name="paleo" value="yes" checked> No
+            <input id="input" type="radio" name="paleo" value="yes" checked> Yes
         <input id="input" type="radio" name="paleo" value="no" checked> No
-
+<input type="checkbox" name="cheap" value="cheap" required="required"> Budget Friendly?</br>
         
         <button type="submit">update</button>
+      <input type="reset" value="Reset">
     </form>
 	
 {{/if}}
+

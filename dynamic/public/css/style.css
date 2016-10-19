@@ -1,0 +1,48 @@
+.main-container{
+    
+    padding-right: 5em;
+    padding-left: 5em;
+    
+}
+
+
+table { 
+    border-spacing: 10px;
+    border-collapse: separate;
+    width: 80%;
+    text-align: center;
+}
+
+td, th { 
+    padding: 10px;
+    text-align:center; 
+    vertical-align:middle;
+}
+
+
+table, th, td {
+    border: 1px solid black;
+}
+
+
+th {
+    height: 50px;
+
+}
+
+
+
+
+.navbar-nav {
+    padding-right:100px;
+}
+
+.navbar-nav li{
+  padding-left:10px;
+  padding-right:10px;
+}
+
+body { padding-top: 70px; 
+        background-color: yellow;
+}
+
