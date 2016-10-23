@@ -1,4 +1,4 @@
-db.user.insert([
+db.recipes.insert([
 {
 	
 	name: 'Historical Fiction',
@@ -16,7 +16,7 @@ db.user.insert([
 {
 	
 	name: 'Tikka masala',
-	ingredients: 'Chicken', 'sauce'
+	ingredients: 'Chicken, sauce',
 	url: 'www.budgetbytes.com/2015/12/slow-cooker-chicken-tikka-masala'
 }
 

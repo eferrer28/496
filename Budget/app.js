@@ -1,7 +1,9 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 
-var db = mongoose.connect('mongodb://localhost/recipeApi');
+
+var db = mongoose.connect('mongodb://localhost/recipeAPI');
 
 var Recipe = require('./models/recipeModel');
 
@@ -10,22 +12,14 @@ var app = express();
 
 var port = process.env.PORT || 3000;
 
-var recipeRouter = express.Router();
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 
-recipeRouter.route('/recipe')
-	.get(function(req, res){
-		Recipe.find(function(err, recipes){
-			if(err)
-				cconsole.log(err)
-			else
-				res.json(recipes);
-		}
-		
-		res.json(responseJson);
-		});
+//executes recipeRouter function, pass in Recipe model
+recipeRouter = require('./routes/recipeRoutes')(Recipe);
 
-app.use('/api', recipeRouter);
 
+app.use('/api/recipes', recipeRouter);
 
 
 app.get ('/', function(req, res){
