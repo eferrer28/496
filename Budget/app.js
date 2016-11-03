@@ -6,7 +6,8 @@ var bodyParser = require('body-parser');
 var db = mongoose.connect('mongodb://localhost/recipeAPI');
 
 var Recipe = require('./models/recipeModel');
-
+var User = require('./models/userModel');
+var Log = require('./models/logModel');
 
 var app = express();
 
@@ -17,16 +18,19 @@ app.use(bodyParser.json());
 
 //executes recipeRouter function, pass in Recipe model
 recipeRouter = require('./routes/recipeRoutes')(Recipe);
+userRouter = require('./routes/userRoutes')(User);
+logRouter = require('./routes/logRoutes')(Log);
 
-
+app.use('/api/users', userRouter);
+app.use('/api/logs', logRouter);
 app.use('/api/recipes', recipeRouter);
 
 
 app.get ('/', function(req, res){
-		res.send("welcome to recipes, bitch");
+		res.send("welcome to this api of mine");
 		
 });
 
 app.listen(port, function(){
-	console.log('gulp eek Running on PORT: ' + port);
+	console.log(' eek Running on PORT: ' + port);
 });

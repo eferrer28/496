@@ -1,0 +1,33 @@
+#!/bin/bash                                                                                                                                                                                     
+CURL='/usr/bin/curl'
+GRECIPE="162.243.137.191:3000/api/recipes/"
+GLOGS="162.243.137.191:3000/api/logs/"
+GUSERS="162.243.137.191:3000/api/users/"
+URL="580c0aa3b58e52704ede057c"
+#CURLARGS="-f -s -S -k"
+
+
+
+# or you can redirect it into a file:
+$CURL  $GRECIPE >> output.txt
+echo ""
+$CURL  $LOGS >> output.txt
+echo "" >> output.txt
+$CURL  $GUSERS >> output.txt
+echo "" >> output.txt
+echo "" >> output.txt
+echo "TESTING POST ON RECIPES" >> output.txt
+$CURL -H "Content-Type: application/json" -X POST -d '{"name": "Chicken Fry", "ingredients":"chicken, fry", "url": "budgetbytes.com"}' $GRECIPE >> output.txt
+#curl 162.243.137.191:3000/api/recipes 
+#URL -H "Content-type: application/json" -X PUT -d  '{"name": "Chicken Fry", "ingredients":"chicken, fry", "url": "budgetbytes.com"}' $GRECIPE
+echo "GET PARTICULAR ID" >> output.txt
+
+$CURL 162.243.137.191:3000/api/recipes/580c0aa3b58e52704ede057c >> output.txt
+echo "EDIT THE FIELDS OF THAT ID" >> output.txt
+
+$CURL -X PUT -H "Content-type: application/json" -d	'{"name": "daaaaaaaa mexican tacos", "ingredients":"so much gooodness", "url": "budgetbytes.com/danktacos"}' 162.243.137.191:3000/api/recipes/580c0aa3b58e52704ede057c >> output.txt
+
+
+$CURL $GRECIPE >> output.txt
+
+curl -X DELETE 162.243.137.191:3000/api/recipes/580d9d8842cc3219d19f4a22 >> output.txt
