@@ -35,19 +35,3 @@ export class Profile {
         }
     } 
     
-    
-    
-/*
- ionViewDidLoad(){
-     console.log("blow me hard");
-     //this.budgetApi.getSome().subscribe(data => {
-       //  this.info = data.info;
-       //  console.log(this.info);
-        // console.log(data.info);
-     this.budgetApi.findAll().subscribe(data => {
-         this.info = data.info;
-     });
-        }
-    } 
-
-*/

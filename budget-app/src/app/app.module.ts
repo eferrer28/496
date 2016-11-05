@@ -5,7 +5,9 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { Page1, Page2, Profile, MakeLog, Welcome} from '../pages/pages';
-import { BudgetApi } from '../shared/shared'
+import { BudgetApi } from '../shared/shared';
+import { LogApi } from '../shared/log-api.service'
+
 
 
 

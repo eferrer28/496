@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';//import { MakeLog } from '../pages/pages';
+
 
 import 'rxjs';
 import { Observable } from 'rxjs/Observable';
@@ -22,6 +23,19 @@ export class BudgetApi{
             return this.information;
         });
     }
+      postThis(body: Object) : Observable<any> {
+        console.log(body);
+        console.log("for me to poop on");
+        let bodyString = JSON.stringify(body); 
+        console.log(bodyString);
+        let headers = new Headers({ 'Content-Type': 'application/json' }); 
+        let options = new RequestOptions({ headers: headers }); // 
+        return this.http.post('http://162.243.137.191:3000/api/logs', bodyString, options).map((res:Response) => res.json())
+                         .catch((error:any) => Observable.throw(error.json().error || 'Server error')); //...errors if any
+    }   
+    
+
+    
     
 }
 

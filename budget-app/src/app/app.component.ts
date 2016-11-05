@@ -6,6 +6,8 @@ import { HttpModule } from '@angular/http';
 
 import { Page1, Page2, Profile, MakeLog, Welcome } from '../pages/pages';
 import { BudgetApi } from '../shared/shared'
+import { LogApi } from '../shared/log-api.service'
+//import { LogApi } from '../pages/make-log/make-log'
 
 
 
@@ -14,7 +16,8 @@ import { BudgetApi } from '../shared/shared'
   //inject this - angular 2 
   providers: [
     BudgetApi,
-    HttpModule
+    HttpModule,
+    LogApi
     
     
     ]
