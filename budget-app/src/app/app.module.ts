@@ -4,11 +4,16 @@ import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { Page1, Page2, Profile, MakeLog, Welcome} from '../pages/pages';
+import { Page1, Page2, Profile, MakeLog, Welcome, Vibrate} from '../pages/pages';
 import { BudgetApi } from '../shared/shared';
-import { LogApi } from '../shared/log-api.service'
+import { LogApi } from '../shared/log-api.service';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
-
+const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': '2b180d6e'
+  }
+};
 
 
 @NgModule({
@@ -19,11 +24,13 @@ import { LogApi } from '../shared/log-api.service'
     Page2,
     Profile,
     MakeLog,
-    Welcome
+    Welcome,
+    Vibrate
     
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+	CloudModule.forRoot(cloudSettings)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -32,7 +39,8 @@ import { LogApi } from '../shared/log-api.service'
     Page2,
     Profile,
     MakeLog,
-    Welcome
+    Welcome,
+    Vibrate
   ],
   providers: []
 })

@@ -25,7 +25,6 @@ export class Profile {
   }
 
  ionViewDidLoad(){
-     console.log("blow me hard");
      this.budgetApi.getSome().subscribe(data => {
        this.info = data;
        console.log(this.info);

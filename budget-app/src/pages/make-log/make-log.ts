@@ -19,15 +19,24 @@ import 'rxjs/add/operator/map';
  // selector: 'page-make-log',
   selector: 'make-log',
     template: `
+    
+    <ion-navbar color="primary">
+        <ion-title>Create a Log</ion-title>
+    </ion-navbar>
+
+
+
     <form (ngSubmit)="logForm()">
       <ion-item>
         <ion-label>Todo</ion-label>
         <ion-input type="text" [(ngModel)]="todo.foodName" name="foodName"></ion-input>
       </ion-item>
+
       <ion-item>
         <ion-label>Description</ion-label>
-        <ion-textarea [(ngModel)]="todo.price" name="price"></ion-textarea>
+        <ion-input type="text" [(ngModel)]="todo.price" name="price"></ion-input>
       </ion-item>
+
       <button ion-button type="submit" block>Add Todo</button>
     </form>
   `,
@@ -44,7 +53,7 @@ export class MakeLog {
     todo = {}
     logForm(){
         console.log(this.todo);
-        console.log(this.todo.foodName)
+        //console.log(this.todo.foodName)
         this.budgetApi.postThis(this.todo).subscribe(data => {
             this.info = data;
             console.log(this.info);
