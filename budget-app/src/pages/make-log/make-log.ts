@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { BudgetApi } from '../../shared/shared';
 import { Http, Response } from '@angular/http';
 
@@ -25,19 +25,29 @@ import 'rxjs/add/operator/map';
     </ion-navbar>
 
 
-
     <form (ngSubmit)="logForm()">
+
       <ion-item>
-        <ion-label>Todo</ion-label>
-        <ion-input type="text" [(ngModel)]="todo.foodName" name="foodName"></ion-input>
+    <ion-label>Food Name</ion-label>
+        <ion-input required type="text"  [(ngModel)]="todo.foodName" name="foodName"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label>Description</ion-label>
-        <ion-input type="text" [(ngModel)]="todo.price" name="price"></ion-input>
+        <ion-label>Price</ion-label>
+        <ion-input required type="number"  [(ngModel)]="todo.price" name="price"></ion-input>
       </ion-item>
 
-      <button ion-button type="submit" block>Add Todo</button>
+        <ion-item>
+  <ion-label>Budget Friendly</ion-label>
+  <ion-checkbox color="dark" checked="true"[(ngModel)]="todo.budgetFriendly" name="budgetFriendly"></ion-checkbox>
+    </ion-item>
+
+        <ion-item>
+  <ion-label>Paleo Friendly</ion-label>
+  <ion-checkbox color="dark" checked="true"[(ngModel)]="todo.paleo" name="paleo"></ion-checkbox>
+    </ion-item>
+
+      <button ion-button type="submit" block>Add Log</button>
     </form>
   `,
 })
@@ -46,7 +56,10 @@ export class MakeLog {
 
     info = [];
 
-  constructor(private http:Http, private nav: NavController, private budgetApi: BudgetApi) {
+  constructor(private http:Http,
+              private nav: NavController, 
+              private budgetApi: BudgetApi, 
+              public alertCtrl: AlertController) {
       
   }
 
@@ -57,13 +70,22 @@ export class MakeLog {
         this.budgetApi.postThis(this.todo).subscribe(data => {
             this.info = data;
             console.log(this.info);
+            
         });
+        this.showAlert();
         
+    } //this was added
+    showAlert(){
+    //new code for alert
+    
+    let alert = this.alertCtrl.create({
+        title: 'HEY!',
+        subTitle: 'YOUR FORM HAS BEEN SUBMITTED. GO CHECK YOUR API',
+        buttons: ['OKIE DOKEY']
+    });
+    alert.present();
     }
-
-
     
+    }
+        
     
-
-    
-}

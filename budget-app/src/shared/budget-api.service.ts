@@ -16,7 +16,7 @@ export class BudgetApi{
     
 }
     
-    getSome() : Observable<any> {
+    getDetails() : Observable<any> {
         return this.http.get('http://162.243.137.191:3000/api/users/580dabfc86fc87486a0d6540').map((response: Response) => {
             this.information = response.json();
             console.log(this.information);
@@ -25,7 +25,7 @@ export class BudgetApi{
     }
       postThis(body: Object) : Observable<any> {
         console.log(body);
-        console.log("for me to poop on");
+        //convert string to json
         let bodyString = JSON.stringify(body); 
         console.log(bodyString);
         let headers = new Headers({ 'Content-Type': 'application/json' }); 

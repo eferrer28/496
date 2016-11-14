@@ -4,7 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HttpModule } from '@angular/http';
 
-import { Page1, Page2, Profile, MakeLog, Welcome, Vibrate } from '../pages/pages';
+import { Page1, Page2, Profile, MakeLog, Welcome, Vibrate, Cam } from '../pages/pages';
 import { BudgetApi } from '../shared/shared';
 import { LogApi } from '../shared/log-api.service';
 //import { LogApi } from '../pages/make-log/make-log'
@@ -45,6 +45,8 @@ export class MyApp {
     });
   })
   }
+   
+   
    /*
   updateApp(){
         this.updateSnapshot();
@@ -78,6 +80,11 @@ export class MyApp {
     openVibrate() {
     
     this.nav.push(Vibrate);
+
+}
+    openCam() {
+    
+    this.nav.push(Cam);
 
 }
   }

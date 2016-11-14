@@ -21,11 +21,11 @@ export class Profile {
   
 
   constructor(private nav: NavController, private budgetApi: BudgetApi) {
-    //this.blowMe();
+    
   }
 
  ionViewDidLoad(){
-     this.budgetApi.getSome().subscribe(data => {
+     this.budgetApi.getDetails().subscribe(data => {
        this.info = data;
        console.log(this.info);
         // console.log(data.info);

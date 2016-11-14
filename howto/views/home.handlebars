@@ -1,0 +1,325 @@
+<div class="topnav">
+<a href="url">lGetting Started</a>
+<a href="url">lCreating Services</a>
+<a href="url">Firebase</a>
+</div>
+
+<h2>HTTP Requests With Firebird</h2>
+
+
+<p> For this tutorial we are going to be learning how to get up and running with the newest 
+release of Ionic 2 that was recently released. This tutorial will also teach how to make HTTP requests
+to an API. For our API will be setting up a Firebase database to quickly get up and running.
+
+<h3 class="header">Getting Started</h3>
+
+
+<p>To run Ionic2, you're going to need somewhat newer versions of NPM and Nodejs. To install the Ionic2 Release Candidate enter the following command into your command line:</p>
+<pre><code class="PowerShell">npm install -g ionic</code>
+</pre>
+
+<p>
+    You can install Once you have everything installed. Run the following command: 
+</p>   
+
+
+<pre><code class="PowerShell">ionic start ionic-http sidemenu --v2 --ts</code>
+</pre>
+    
+	
+<p></p>
+<p></p>
+    
+"ionic-http" is the name of our folder and side menu is the name of the template that we are going to use
+for this tutorial. By passing --v2 we are saying that we want to be working on an ionic app. Since this tutorial
+is going to be doing using typescript we all need to put down the --ts flag. 
+
+<p>If a template is not specified then the tabs template will automatically be defaulted. By typing in </p>
+
+<pre><code class="PowerShell">ionic start --list </code>
+</pre>
+
+
+<p>you can see a list of available templates. After the project has been created you'll get an app structure like the following:</p> 
+
+ <img src="breakdown.PNG" alt="" height="500" width="250"> 
+
+
+<p>You'll be spending the majority of your time under the src directory. Under the pages folder is where you write your code for the screens you are creating on your mobile application. When the app is created your are set up with two pages in "page1" and "page2". To make sure sure our app was created properly. Type in the following command to the console while in your project's root folder. </p>
+
+<pre><code class="PowerShell">ionic serve</code>
+</pre>
+
+
+    
+<p>This command allows you to test your app in your browser. When any changes have been made to any of your HTML, SCSS, JS, or TS file the browser is automatically reloaded when the above mentioned files are saved. Using this tool along with  Chrome's DevTools' Device Mode is a great and quick way to view your app on the fly. Since this guide will not go into native tools we be strictly using the "serve" command to test our application.</p>
+
+
+<h3 class="header">Generating Posts</h3>
+
+<p>From here we are going to go ahead and create a new page that will display our data that we will receive from a firebase database that we will set up in just a little bit. Ionic provides a generator function that allows you to create pages and services for your application. Lets run the following command. </p>
+
+<pre><code class="PowerShell">ionic g page requests</code>
+</pre>
+
+<p>This creates three new files under a new requests directory under pages. Inside that directory a new HTML, Typescript, and SASS file have all been created. Every time a new page is created we need to add this into our "app.module.ts" file. We need to import our new page and to add it in under declarations and entryComponents. It should now look like the following. </p>
+
+<pre><code class="TypeScript"> 
+import { NgModule } from '@angular/core';
+import { IonicApp, IonicModule } from 'ionic-angular';
+import { MyApp } from './app.component';
+import { Page1 } from '../pages/page1/page1';
+import { Page2 } from '../pages/page2/page2';
+import { RequestsPage } from '../pages/requests/requests';
+
+@NgModule({
+  declarations: [
+    MyApp,
+    Page1,
+    Page2,
+    RequestsPage
+  ],
+  imports: [
+    IonicModule.forRoot(MyApp)
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    Page1,
+    Page2,
+    RequestsPage   
+  ],
+  providers: []
+})
+export class AppModule {}
+</code></pre>
+
+<h3 class="header">The SideMenu</h3>
+
+
+<p>If you were to click on the side menu icon you would notice that our new page still doesn't appear and that's because we  still need to add it to our side menu navigation. Open up the app.html file under the app directory and set up the code to look like the following. </p>
+
+<pre><code class="HTML">
+   &lt;ion-content&gt;
+    &lt;ion-list&gt;
+      &lt;button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)"&gt;
+        {{p.title}}
+      &lt;/button&gt;
+	      &lt;button menuClose ion-item (click)="openRequests()"&gt;
+        Requests
+      &lt;/button&gt;
+    &lt;/ion-list&gt;
+  &lt;/ion-content&gt;
+</code></pre>
+
+
+
+<p> Under the app.component.ts, import the RequestsPage class and add the following code toward the bottom. </p>
+
+<pre><code class="TypeScript"> openRequests() {
+    
+    <span style="color:blue">this</span>.nav.push(RequestsPage);
+  }</code></pre>
+
+
+
+<p> Now we are able to access our requests page from the side menu. Ionic 2 deals with navigation as a stack meaning new pages are pushed to the top of stack which moves us forward in teh application. When we go to the new Requests page you can see the back botton automatically appears. When we are navigating backwards we are popping off the page from the stack.  </p>
+
+<p></p>
+
+<h3 class="header">Firebase</h3>
+
+
+<p>Now we are going to start working with Firebase but first we need to grab some dummy json data. So first go over to                     <a href="http://www.json-generator.com/">Json Generator</a> and generate some data and save that file. </p>
+
+<p>Now lets go over to firebase and create a free account. Firebase is a backend web service that is going to serve as our HTTP web API for our application. Once you have registered your account go inside the firebase console and create a new project and we'll name it http-test. After you created your project click the Database tab on the far left of the screen under Authentication. From here we are going to import our JSON file that we took from the Json Generator. </p>
+
+ <img src="firebase.PNG" class="images"> 
+<p></p>
+
+<p>You can see all the different the types of JSON data that is now available in our database.</p>
+<p></p>
+
+
+ <img src="firebase1.PNG" class="images"> 
+
+<p>Under the rules tab also set "read" to true. </p>
+
+<h3 class="header">Setting Up Services</h3>
+
+
+<p>From here what we want to start to do is create a service that will be used solely for interating with our HTTP data. Under our src directory, create a new folder called services and inside  we will create a new typescript file that we will name requests.service.ts  </p>
+
+ <img src="servicesview.PNG" height="200" width="200"> 
+
+
+
+<p>Set up our requests.service.ts typescript to look like the following:</p>
+
+
+<pre><code class="TypeScript"> 
+import { Injectable } from '@angular/core';
+import { Http, Response} from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+@Injectable()
+export class RequestsApi{
+    private baseUrl = 'https://http-test-a89fb.firebaseio.com';
+    constructor(private http:Http) {
+}
+}
+</code></pre>
+
+<p>Lets break this down line by line so you can get a better understanding of what everything means.</p>
+
+<pre><code class="TypeScript">
+import { Http, Response} from '@angular/http';
+</code></pre>
+
+<p>This lets us use Angular http object to access the REST services. Since Ionic 2 is based on Angular 2 the http object methods are not returning Promises but instead return Observables.</p>
+
+<pre><code class="TypeScript">
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+
+</code></pre>
+
+<p></p>
+
+
+<p>For our HTTP requests we are using the rxjs library so we need to import the RcJS observables.</p>
+
+<pre><code class="TypeScript">
+@Injectable()
+export class RequestsApi{
+    
+    private baseUrl = 'https://http-test-a89fb.firebaseio.com';
+    constructor(private http:Http) {
+}
+</code></pre>
+
+<p></p>
+
+
+<p>Our new class needs to be injected so the injectable dectorator is added in. We also inject our http into the constructor. </p>
+
+<p>We get the Firebase Url from our database as seen in the following picture. Copy that url into our baseUrl.</p>
+
+ <img src="fburl.PNG" class="images"> 
+
+<p>We also need to make some changes into our app.components.tx file. Enter the following code in. </p>
+
+
+import { RequestsApi } from '../services/requests.service';
+
+<pre><code class="TypeScript">
+@Component({
+  templateUrl: 'app.html',
+      providers: [
+      RequestsApi
+  ]
+})
+</code></pre>
+
+<p>We inject the providers here so they are globally available to our entire application. This is standard for Angular2.</p>
+
+<p></p>
+
+<h3 class="header">Http GET</h3>
+
+
+
+<p>Now we can go ahead and set up the code so we can start requesting data from our API. Add in the following under our RequestsApi class.</p>
+
+<p></p>
+
+<pre><code class="TypeScript">
+    getDetails() : Observable&#60;any&#62; {
+        return this.http.get('${this.baseUrl}/0.json').map((response: Response) => {
+            this.ourData = response.json();
+            return this.ourData;
+        });
+    }
+</code></pre>
+
+<p>Lets start off by creating a function called getDetails. When we use the get method from Angular's http class we are creating an observable object. When we use the map function we are providing a result object for the incoming request. The map function processes the payload from our http get request. Once this the mapping is finished we have to subscribe the observable. Open up the request.ts page that we created earlier and set it up to look like the following code. </p>
+
+
+
+<pre><code class="TypeScript">
+
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { RequestsApi } from '../../services/requests.service';
+
+
+@Component({
+  selector: 'page-requests',
+  templateUrl: 'requests.html'
+})
+export class RequestsPage {
+    
+  info = [];
+
+  constructor(public navCtrl: NavController, private requestsApi: RequestsApi) {}
+
+  ionViewDidLoad() {
+   this.requestsApi.getDetails().subscribe(data => {
+       this.info = data;
+       console.log(this.info);
+
+     });
+        }
+
+}
+
+</code></pre>
+
+<p></p>
+
+<p>In this piece of code we are subscribing to the observable. Subscribe is the function that is actually executing the observable. The returned json data is being stored in the empty info array container. At this point I put in the console.log as I believe it is a good time to make sure that our http get requets is actually working. So lets run the ionic serve command and when you navigate to the requests page it should still be an empty but in the console you should be able to see a json object with some details from your API like the following. </p>
+
+ <img src="clickhere.PNG" class="httpsuccess"> 
+ <img src="jsonsuccess.PNG" class="httpsuccess json">
+
+
+<em>SUCCESS</em>
+
+
+<p>We can see our object in the console but it's doing us no good there so lets move over to our response.html page and lets start parsing our response. Enter in the following right below the ion-header tag. </p>
+
+
+<pre><code class="html.handlebars">
+&#60ion-content padding&#62
+    
+    &#60ion-list&#62
+    &#60ion-label color="primary"&#62Name&#60/ion-label&#62
+    &#60ion-item&#62&#123;&#123;info.name&#125;&#125;&#60/ion-item&#62
+    &#60ion-label color="primary"&#62Email Address &#60/ion-label&#62
+    &#60ion-item&#62&#123;&#123;info.email&#125;&#125;&#60/ion-item&#62
+    &#60ion-label color="primary"&#62Your Available Balance &#60/ion-label&#62
+    &#60ion-item&#62&#123;&#123;info.balance&#125;&#125;&#60/ion-item&#62
+    &#60ion-label color="primary"&#62Age &#60/ion-label&#62
+    &#60ion-item&#62&#123;&#123;info.age&#125;&#125;&#60/ion-item&#62
+    &#60ion-label color="primary"&#62Address &#60/ion-label&#62
+    &#60ion-item&#62&#123;&#123;info.address&#125;&#125;&#60/ion-item&#62
+    &#60ion-label color="primary"&#62Company Info&#60/ion-label&#62
+    &#60ion-item&#62&#123;&#123;info.company&#125;&#125;&#60/ion-item&#62
+    &#60/ion-list&#62
+
+&#60/ion-content&#62
+</code></pre>
+
+<p>And now you should end up with something that looks like something like the following:</p>
+
+ <img src="httpresponse.PNG" class="httpsuccess"> 
+
+
+
+
+
+
+

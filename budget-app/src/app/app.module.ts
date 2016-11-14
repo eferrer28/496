@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { Page1, Page2, Profile, MakeLog, Welcome, Vibrate} from '../pages/pages';
+import { Page1, Page2, Profile, MakeLog, Welcome, Vibrate, Cam} from '../pages/pages';
 import { BudgetApi } from '../shared/shared';
 import { LogApi } from '../shared/log-api.service';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
@@ -25,7 +25,8 @@ const cloudSettings: CloudSettings = {
     Profile,
     MakeLog,
     Welcome,
-    Vibrate
+    Vibrate,
+    Cam
     
   ],
   imports: [
@@ -40,7 +41,8 @@ const cloudSettings: CloudSettings = {
     Profile,
     MakeLog,
     Welcome,
-    Vibrate
+    Vibrate,
+    Cam
   ],
   providers: []
 })

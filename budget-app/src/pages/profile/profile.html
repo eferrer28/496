@@ -7,14 +7,16 @@
 </ion-header>
 
 <ion-content padding>
-    Gonna get your name, email, and budget. Skeet Skeet
 
     <ion-list>
-    {{info.name}}
-    {{info.email}}
+    <ion-label color="primary">Name</ion-label>
+    <ion-item> {{info.name}}</ion-item>
+    <ion-label color="primary">Email Address </ion-label>
+    <ion-item> {{info.email}}</ion-item>
+    <ion-label color="primary">Your Grocery Budget </ion-label>
+    <ion-item> {{info.budget}}</ion-item>
 
         
     </ion-list>
-    <ion-item>  
-    </ion-item>
+
 </ion-content>
