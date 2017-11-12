@@ -1,20 +1,21 @@
 <div class="topnav">
-<a href="url">lGetting Started</a>
-<a href="url">lCreating Services</a>
-<a href="url">Firebase</a>
+<a href="#starting">Getting Started</a>
+<a href="#posts">Generating Posts</a>
+<a href="#services">Creating Services</a>
+<a href="#firebase">Firebase</a>
 </div>
 
-<h2>HTTP Requests With Firebird</h2>
+<h2>HTTP Requests With Firebase</h2>
 
 
 <p> For this tutorial we are going to be learning how to get up and running with the newest 
 release of Ionic 2 that was recently released. This tutorial will also teach how to make HTTP requests
-to an API. For our API will be setting up a Firebase database to quickly get up and running.
+to an API. For our API we will be setting up a Firebase database to quickly get up and running.
 
-<h3 class="header">Getting Started</h3>
+<h3 id="start" class="header">Getting Started</h3>
 
 
-<p>To run Ionic2, you're going to need somewhat newer versions of NPM and Nodejs. To install the Ionic2 Release Candidate enter the following command into your command line:</p>
+<p>To run Ionic2, you're going to need somewhat newer versions of NPM and Node.js. To install the Ionic2 Release Candidate enter the following command into your command line:</p>
 <pre><code class="PowerShell">npm install -g ionic</code>
 </pre>
 
@@ -52,17 +53,17 @@ is going to be using typescript we need to have the --ts flag.
 
 
     
-<p>This command allows you to test your app in your browser. When any changes have been made to any of your HTML, SCSS, JS, or TS file the browser is automatically reloaded when the above mentioned files are saved. Using this tool along with  Chrome's DevTools' Device Mode is a great and quick way to view your app on the fly. Since this guide will not go into native tools we be strictly using the "serve" command to test our application.</p>
+<p>This command allows you to test your app in your browser. When any changes have been made to any of your HTML, SCSS, JS, or TS files the browser is automatically reloaded when the above mentioned files are saved. Using this tool along with  Chrome's DevTools' is a great and quick way to view your app on the fly. Since this guide will not go into native tools we will be strictly using the "serve" command to test our application.</p>
 
 
-<h3 class="header">Generating Posts</h3>
+<h3 id="posts" class="header">Generating Posts</h3>
 
-<p>From here we are going to go ahead and create a new page that will display our data that we will receive from a firebase database that we will set up in just a little bit. Ionic provides a generator function that allows you to create pages and services for your application. Lets run the following command. </p>
+<p>From here we are going to go ahead and create a new page that will display our data that we will receive from a firebase database that we will set up in just a little bit. Ionic provides a generator function that allows you to create pages and services for your application. Lets run the following command: </p>
 
 <pre><code class="PowerShell">ionic g page requests</code>
 </pre>
 
-<p>This creates three new files under a new requests directory under pages. Inside that directory a new HTML, Typescript, and SASS file have all been created. Every time a new page is created we need to add this into our "app.module.ts" file. We need to import our new page and to add it in under declarations and entryComponents. It should now look like the following. </p>
+<p>This creates three new files under a new requests directory under pages. Inside that directory a new HTML, Typescript, and SASS file have all been created. Every time a new page is created we need to add this into our "app.module.ts" file. We need to import our new page and add it in under declarations and entryComponents. It should now look like the following: </p>
 
 <pre><code class="TypeScript"> 
 import { NgModule } from '@angular/core';
@@ -114,7 +115,7 @@ export class AppModule {}
 
 
 
-<p> Under the app.component.ts, import the RequestsPage class and add the following code toward the bottom. </p>
+<p> Under the app.component.ts, import the RequestsPage class and add the following code toward the bottom: </p>
 
 <pre><code class="TypeScript"> openRequests() {
     
@@ -123,21 +124,21 @@ export class AppModule {}
 
 
 
-<p> Now we are able to access our requests page from the side menu. Ionic 2 deals with navigation as a stack meaning new pages are pushed to the top of stack which moves us forward in teh application. When we go to the new Requests page you can see the back botton automatically appears. When we are navigating backwards we are popping off the page from the stack.  </p>
+<p> Now we are able to access our requests page from the side menu. Ionic 2 deals with navigation as a stack meaning new pages are pushed to the top of the stack which moves us forward in the application. When we go to the new Requests page you can see the back button automatically appears. When we are navigating backwards we are popping off the page from the stack.  </p>
 
 <p></p>
 
-<h3 class="header">Firebase</h3>
+<h3 id="firebase" class="header">Firebase</h3>
 
 
 <p>Now we are going to start working with Firebase but first we need to grab some dummy json data. So first go over to                     <a href="http://www.json-generator.com/">Json Generator</a> and generate some data and save that file. </p>
 
-<p>Now lets go over to firebase and create a free account. Firebase is a backend web service that is going to serve as our HTTP web API for our application. Once you have registered your account go inside the firebase console and create a new project and we'll name it http-test. After you created your project click the Database tab on the far left of the screen under Authentication. From here we are going to import our JSON file that we took from the Json Generator. </p>
+<p>Now lets go over to firebase and create a free account. Firebase is a backend web service that is going to serve as our HTTP web API for our application. Once you have registered your account go inside the firebase console and create a new project and we'll name it "http-test". After you created your project click the Database tab on the far left of the screen under Authentication. From here we are going to import our JSON file that we took from the Json Generator. </p>
 
  <img src="firebase.PNG" class="images"> 
 <p></p>
 
-<p>You can see all the different the types of JSON data that is now available in our database.</p>
+<p>You can see all the different types of JSON data that is now available in our database.</p>
 <p></p>
 
 
@@ -145,16 +146,16 @@ export class AppModule {}
 
 <p>Under the rules tab also set "read" to true. </p>
 
-<h3 class="header">Setting Up Services</h3>
+<h3 id="services" class="header">Setting Up Services</h3>
 
 
-<p>From here what we want to start to do is create a service that will be used solely for interating with our HTTP data. Under our src directory, create a new folder called services and inside  we will create a new typescript file that we will name requests.service.ts  </p>
+<p>From here what we want to start to do is create a service that will be used solely for interacting with our HTTP data. Under our src directory, create a new folder called services and inside  we will create a new typescript file that we will name requests.service.ts  </p>
 
  <img src="servicesview.PNG" height="200" width="200"> 
 
 
 
-<p>Set up our requests.service.ts typescript to look like the following:</p>
+<p>Set up our requests.service.ts file to look like the following:</p>
 
 
 <pre><code class="TypeScript"> 
@@ -190,7 +191,7 @@ import 'rxjs/add/operator/map';
 <p></p>
 
 
-<p>For our HTTP requests we are using the rxjs library so we need to import the RcJS observables.</p>
+<p>For our HTTP requests we are using the rxjs library so we need to import the correct library.</p>
 
 <pre><code class="TypeScript">
 @Injectable()
@@ -204,18 +205,20 @@ export class RequestsApi{
 <p></p>
 
 
-<p>Our new class needs to be injected so the injectable dectorator is added in. We also inject our http into the constructor. </p>
+<p>Our new class needs to be injected so the injectable decorator is added in. We also inject our http into the constructor. </p>
 
 <p>We get the Firebase Url from our database as seen in the following picture. Copy that url into our baseUrl.</p>
 
  <img src="fburl.PNG" class="images"> 
 
-<p>We also need to make some changes into our app.components.tx file. Enter the following code in. </p>
+<p>We also need to make some changes into our app.components.ts file. Enter the following code in: </p>
 
 
-import { RequestsApi } from '../services/requests.service';
+
 
 <pre><code class="TypeScript">
+
+import { RequestsApi } from '../services/requests.service';
 @Component({
   templateUrl: 'app.html',
       providers: [
@@ -232,7 +235,7 @@ import { RequestsApi } from '../services/requests.service';
 
 
 
-<p>Now we can go ahead and set up the code so we can start requesting data from our API. Add in the following under our RequestsApi class.</p>
+<p>Now we can go ahead and set up the code so we can start requesting data from our API. Add in the following under our RequestsApi class:</p>
 
 <p></p>
 
@@ -245,7 +248,7 @@ import { RequestsApi } from '../services/requests.service';
     }
 </code></pre>
 
-<p>Lets start off by creating a function called getDetails. When we use the get method from Angular's http class we are creating an observable object. When we use the map function we are providing a result object for the incoming request. The map function processes the payload from our http get request. Once this the mapping is finished we have to subscribe the observable. Open up the request.ts page that we created earlier and set it up to look like the following code. </p>
+<p>Lets start off by creating a function called getDetails. When we use the get method from Angular's http class we are creating an observable object. When we use the map function we are providing a result object for the incoming request. The map function processes the payload from our http get request. Once this mapping is finished we have to subscribe the observable. Open up the request.ts page that we created earlier and set it up to look like the following code: </p>
 
 
 
@@ -280,9 +283,9 @@ export class RequestsPage {
 
 <p></p>
 
-<p>In this piece of code we are subscribing to the observable. Subscribe is the function that is actually executing the observable. The returned json data is being stored in the empty info array container. At this point I put in the console.log as I believe it is a good time to make sure that our http get requets is actually working. So lets run the ionic serve command and when you navigate to the requests page it should still be an empty but in the console you should be able to see a json object with some details from your API like the following. </p>
+<p>In this piece of code we are subscribing to the observable. Subscribe is the function that is actually executing the observable. The returned json data is being stored in the empty info array container. At this point I put in the console.log as I believe it is a good time to make sure that our http get request is actually working. So lets run the ionic serve command and when you navigate to the requests page it should still be empty but in the console you should be able to see a json object with some details from your API like the following: </p>
 
- <img src="clickhere.PNG" class="httpsuccess"> 
+ <img src="clickhere.png" class="httpsuccess"> 
  <img src="jsonsuccess.PNG" class="httpsuccess json">
 
 
